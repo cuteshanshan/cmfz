@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baizhi.dao.MenuDao">
 
-    <select id="getAll">
-        select * from menu
+    <select id="getAll" resultType="Menu">
+        select DISTINCT m1.id,m1.title,m2.id mid,m2.title mtitle
+		 from menu m1
+		 left join menu m2
+		 on m1.id=m2.parent_id
+		 where m1.parent_id is null
     </select>
 
 </mapper>
