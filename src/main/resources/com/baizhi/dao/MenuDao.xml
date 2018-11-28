@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baizhi.dao.MenuDao">
+	<resultMap id="MenuMap" type="Menu">
+		<id column="id" property="id"/>
+		<result property="title" column="title"/>
+		<result property="iconCls" column="iconcls"/>
+		<result property="url" column="url"/>
+		<collection property="mlist" ofType="Menu">
+			<id column="cid" property="id"/>
+			<result property="title" column="ctitle"/>
+			<result property="iconCls" column="ciconcls"/>
+			<result property="url" column="curl"/>
+			<result property="parent_id" column="pid"/>
+		</collection>
+	</resultMap>
 
-    <select id="getAll" resultType="Menu">
-        select DISTINCT m1.id,m1.title,m2.id mid,m2.title mtitle
-		 from menu m1
-		 left join menu m2
-		 on m1.id=m2.parent_id
-		 where m1.parent_id is null
+	<select id="getAll" resultMap="MenuMap">
+      select m.*, n.id cid,n.title ctitle,n.iconCls ciconcls,n.parent_id pid,n.url curl from menu m LEFT JOIN menu n on m.id=n.parent_id where m.parent_id is null
     </select>
-
 </mapper>

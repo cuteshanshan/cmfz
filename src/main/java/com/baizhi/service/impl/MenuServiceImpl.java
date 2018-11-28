@@ -1,12 +1,12 @@
 package com.baizhi.service.impl;
 
 import com.baizhi.dao.MenuDao;
-import com.baizhi.entity.Menu;
 import com.baizhi.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -14,7 +14,10 @@ public class MenuServiceImpl implements MenuService {
     private MenuDao menuDao;
 
     @Override
-    public List<Menu> getAll() {
-        return menuDao.getAll();
+    public Map getAll() {
+        Map map=new HashMap();
+        map.put("menulist",menuDao.getAll());
+
+        return map;
     }
 }
